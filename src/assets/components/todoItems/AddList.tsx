@@ -19,7 +19,7 @@ class AddList extends React.Component< IProps, IState >{
         return(
             <div className="add-list">
                 <form onSubmit={this.props.onSubmit} action="">
-                    <input type="text" onChange={this.props.onChange}/>
+                    <input ref="creteValue" type="text" onChange={this.props.onChange}/>
                     <button>add list</button>
                 </form>
             </div>
