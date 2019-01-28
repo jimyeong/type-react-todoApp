@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Todo from './assets/components/Todo';
 
 class App extends React.Component{
 
@@ -6,6 +7,11 @@ class App extends React.Component{
         return(
             <div className="test">
                 hello
+                <Todo
+                    name="jimyeong"
+                    job="dev"
+                />
+
             </div>
         )
     }
