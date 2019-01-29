@@ -11,7 +11,7 @@ interface TodoItemData{
 /* missing point */
 interface IProps{
     todoItems: TodoItemData[];
-    onDelete() : void;
+    onDelete(id: number): void;
 }
 
 

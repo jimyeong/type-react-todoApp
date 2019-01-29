@@ -4,32 +4,31 @@ import TodoList from './todoItems/TodoList';
 import Counter from './todoItems/Counter';
 import './todoItems/less/todo.less';
 
-interface Props{
+interface Props {
     name: string;
     job: string;
 }
 
-interface TodoItemData{
+interface TodoItemData {
     id: number;
     text: string;
     done: boolean;
 }
 
-interface State{
+interface State {
     todoItems: TodoItemData[];
-    input:string;
+    input: string;
 }
 
 
-class Todo extends React.Component< Props,State >{
-
+class Todo extends React.Component<Props, State> {
     id: number = 0;
     state: State = {
-        todoItems:[],
+        todoItems: [],
         input: ''
     };
 
-    onSubmit = (e: React.FormEvent<HTMLFormElement>):void => {
+    onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         this.setState(
             ({ todoItems, input }) => ({
@@ -43,23 +42,19 @@ class Todo extends React.Component< Props,State >{
         );
     };
 
-    onChange = (e: React.FormEvent<HTMLInputElement>):void => {
+    onChange = (e: React.FormEvent<HTMLInputElement>): void => {
         const { value } = e.currentTarget;
         this.setState({
             input: value
         });
     };
 
-    onDelete = ( id: number ):void => {
+    onDelete = ( id: number ): void => {
         this.setState(
             ({ todoItems }) => ({
                 todoItems: todoItems.filter( todo => todo.id !== id )
             })
         )
-    };
-
-    onEdit = () => {
-
     };
 
     public render(){
@@ -70,12 +65,12 @@ class Todo extends React.Component< Props,State >{
                         onSubmit={ this.onSubmit.bind(this) }
                         onChange={ this.onChange.bind(this) }
                     />
-                    { !this.state.todoItems[0] ?
+                    {
+                        !this.state.todoItems[0] ?
                         <h3>no list</h3> :
                         <TodoList
                             todoItems={ this.state.todoItems }
-                            onDelete={ this.onDelete.bind(this) }
-                        />
+                            onDelete={ this.onDelete.bind(this) }/>
                     }
                     <Counter/>
                 </div>
