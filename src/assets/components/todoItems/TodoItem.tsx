@@ -1,10 +1,12 @@
 import * as React from 'react';
+import {string} from "prop-types";
 
 interface ItemProps{
     id: number;
     text: string;
     done: boolean;
     onDelete( id:number ): void;
+    changeChildData( prev:number, created: string ): void;
 }
 interface ItemState{
     onEdit: boolean;
@@ -12,15 +14,32 @@ interface ItemState{
 
 class TodoItem extends React.Component<ItemProps, ItemState> {
 
+    private myRef = React.createRef<HTMLInputElement>();
+
     constructor( props: ItemProps ){
         super(props);
         this.state = {
             onEdit: false
-        }
+        };
     }
 
     changeEditState = (): void => {
-        this.setState({onEdit:true})
+        this.setState({onEdit:!this.state.onEdit})
+    };
+
+    changeItem = (e: React.FormEvent<HTMLFormElement>): void => {
+        e.preventDefault();
+        /*cdm cdwumount 전에 할당*/
+
+        const prevId: number = this.props.id;
+        //const prevText: string = this.props.text;
+        const createdValue: string = this.myRef.current!.value;
+        this.props.changeChildData(prevId, createdValue);
+
+        this.setState({
+            onEdit: !this.state.onEdit
+        })
+
     };
 
     renderEdit = (): JSX.Element => {
@@ -41,11 +60,17 @@ class TodoItem extends React.Component<ItemProps, ItemState> {
         }else{
             return(
                 <div className="todo__inner">
-                    <input type="text"/>
-                    <div className="todo__btns">
-                        <button className="todo__btn delete-btn">ok</button>
-                        <button className="todo__btn delete-edit">cancel</button>
-                    </div>
+                    <form action="" onSubmit={this.changeItem.bind(this)}>
+                        <input type="text" ref={this.myRef}/>
+                        <div className="todo__btns">
+                            <button
+                                onClick={e => this.changeItem.bind(this)}
+                                className="todo__btn delete-btn">ok</button>
+                            <button
+                                onClick={(e) => this.changeEditState.bind(this)}
+                                className="todo__btn delete-edit">cancel</button>
+                        </div>
+                    </form>
                 </div>
             )
         }
@@ -53,7 +78,6 @@ class TodoItem extends React.Component<ItemProps, ItemState> {
 
 
     public render(){
-        console.log(this.state.onEdit);
         return(
             <li className="todo-item">
                 {this.renderEdit()}

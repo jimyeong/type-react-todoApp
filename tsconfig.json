@@ -8,11 +8,17 @@
     "preserveConstEnums": true,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es5",
-    "strict": true
+    "target": "es6",
+    "strict": true,
+    "lib": [
+      "es6",
+      "dom"
+    ]
   },
   "include": [
     "./src/**/*"
   ]
+
+
 
 }

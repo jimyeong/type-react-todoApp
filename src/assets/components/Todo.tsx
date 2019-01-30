@@ -57,7 +57,25 @@ class Todo extends React.Component<Props, State> {
         )
     };
 
+    changeChildData = (prev: number, created: string):void => {
+        const newTodoItems: TodoItemData[] = this.state.todoItems;
+        let createdTodos: TodoItemData[]= newTodoItems.map((item,idx): TodoItemData => {
+            return (prev === item.id) ? ({...item, text: created}) : ({...item})
+        });
+        console.log('oldone',this.state.todoItems);
+        console.log('newone',createdTodos);
+        this.setState(
+            ({todoItems}) => ({
+                todoItems: createdTodos
+            })
+        );
+
+
+
+    };
+
     public render(){
+        console.log('afteer',this.state.todoItems);
         return(
             <div className="todo-wrap">
                 <div className="todo">
@@ -69,6 +87,7 @@ class Todo extends React.Component<Props, State> {
                         !this.state.todoItems[0] ?
                         <h3>no list</h3> :
                         <TodoList
+                            changeChildData={ this.changeChildData.bind(this) }
                             todoItems={ this.state.todoItems }
                             onDelete={ this.onDelete.bind(this) }/>
                     }

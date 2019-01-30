@@ -12,6 +12,7 @@ interface TodoItemData{
 interface IProps{
     todoItems: TodoItemData[];
     onDelete(id: number): void;
+    changeChildData(prev: number, created: string): void
 }
 
 
@@ -20,11 +21,17 @@ class TodoList extends React.Component< IProps >{
         const Items = this.props.todoItems.map((item: TodoItemData, i: number ) => {
             return <TodoItem
                 { ...item }
+                changeChildData={this.props.changeChildData}
                 onDelete={this.props.onDelete}
                 key={i}/>
         });
         return Items
     };
+
+    componentDidMount() {
+
+    }
+
 
     public render(){
         return(
